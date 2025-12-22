@@ -3,16 +3,17 @@
     {
       "name": "global-ds-ilm",
       "index_template": {
-        "index_patterns": [
-          "*"
-        ],
+        "index_patterns": ["*"], 
         "template": {
           "settings": {
             "index": {
               "lifecycle": {
                 "name": "2-week-retention"
               },
-              "number_of_replicas": "0"
+              "number_of_replicas": "0",
+              "lifecycle.rollover_alias": "global-ds-alias",
+              "lifecycle.max_primary_shard_size": "50gb",
+              "lifecycle.max_age": "1d"
             }
           }
         },
@@ -21,6 +22,9 @@
         "data_stream": {
           "hidden": false,
           "allow_custom_routing": false
+        },
+        "metadata": {
+          "description": "Global ILM template for non-system data streams"
         }
       }
     }
