@@ -1,0 +1,29 @@
+{
+  "index_templates": [
+    {
+      "name": "ti_abusech",
+      "index_template": {
+        "index_patterns": [
+          ".ds-logs-ti_abusech.*-*"
+        ],
+        "template": {
+          "settings": {
+            "index": {
+              "lifecycle": {
+                "name": "ti_abusech_14d"
+              },
+              "auto_expand_replicas": "false",
+              "number_of_replicas": "1"
+            }
+          }
+        },
+        "composed_of": [],
+        "priority": 500,
+        "data_stream": {
+          "hidden": false,
+          "allow_custom_routing": false
+        }
+      }
+    }
+  ]
+}
