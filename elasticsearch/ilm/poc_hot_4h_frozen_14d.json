@@ -1,0 +1,47 @@
+{
+  "poc_hot_4h_frozen_14d": {
+    "version": 1,
+    "modified_date": "2025-11-01T19:12:58.053Z",
+    "policy": {
+      "phases": {
+        "hot": {
+          "min_age": "0ms",
+          "actions": {
+            "rollover": {
+              "max_age": "4h",
+              "max_primary_shard_size": "40gb"
+            },
+            "set_priority": {
+              "priority": 100
+            }
+          }
+        },
+        "frozen": {
+          "min_age": "4h",
+          "actions": {
+            "searchable_snapshot": {
+              "snapshot_repository": "found-snapshots",
+              "force_merge_index": true
+            }
+          }
+        },
+        "delete": {
+          "min_age": "14d",
+          "actions": {
+            "delete": {
+              "delete_searchable_snapshot": true
+            },
+            "wait_for_snapshot": {
+              "policy": "poc-export-snapshot-policy"
+            }
+          }
+        }
+      }
+    },
+    "in_use_by": {
+      "indices": [],
+      "data_streams": [],
+      "composable_templates": []
+    }
+  }
+}
