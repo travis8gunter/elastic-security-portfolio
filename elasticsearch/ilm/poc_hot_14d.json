@@ -1,0 +1,37 @@
+{
+  "poc_hot_14d": {
+    "version": 2,
+    "modified_date": "2025-11-14T08:34:03.877Z",
+    "policy": {
+      "phases": {
+        "hot": {
+          "min_age": "0ms",
+          "actions": {
+            "set_priority": {
+              "priority": 100
+            },
+            "rollover": {
+              "max_age": "14d",
+              "max_primary_shard_size": "40gb"
+            }
+          }
+        },
+        "delete": {
+          "min_age": "14d",
+          "actions": {
+            "delete": {
+              "delete_searchable_snapshot": true
+            }
+          }
+        }
+      }
+    },
+    "in_use_by": {
+      "indices": [],
+      "data_streams": [],
+      "composable_templates": [
+        "poc-security-template"
+      ]
+    }
+  }
+}
