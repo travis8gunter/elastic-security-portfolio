@@ -4,44 +4,44 @@
     "processors": [
       {
         "drop": {
-          "if": """
-          def action = ctx?.event?.action;
-          if (action == null) return false;
-          if (['blocked','denied','deny','dropped','drop','reject','rejected'].contains(action.toLowerCase())) return false;
-          def org = ctx?.destination?.as?.organization?.name;
-          if (org == null) return false;
-          def dropList = [
-            'Google LLC',
-            'Cloudflare, Inc.',
-            'Microsoft Corporation',
-            'DNSFilter, Inc.',
-            'Amazon.com, Inc.',
-            'OneCleveland',
-            'Cisco OpenDNS, LLC',
-            'Apple Inc.',
-            'Akamai International B.V.',
-            'CenturyLink Communications, LLC',
-            'Akamai Technologies, Inc.',
-            'Verizon Business',
-            'Fastly, Inc.',
-            'Facebook, Inc.',
-            'ZSCALER, INC.',
-            'SecurityMetrics, Inc.',
-            'Cox Communications Inc.',
-            'Cogeco Connexion inc',
-            'Cogeco Connexion Inc.',
-            'Datto, LLC',
-            'Akamai Connected Cloud',
-            'Quad9',
-            'Cisco Webex LLC',
-            'Cloudflare London, LLC',
-            'Anthropic, PBC',
-            'Amazon Data Services Ireland Ltd',
-            'Google Ireland Limited',
-            'Google Fiber Inc.'
-          ];
-          return dropList.contains(org);
-        """
+          "if": """def action = ctx?.event?.action;
+if (action != null && ['blocked','denied','deny','dropped','drop','reject','rejected'].contains(action.toLowerCase())) return false;
+def org = ctx?.destination?.as?.organization?.name;
+if (org == null) return false;
+def dropList = [
+  // Tier 1 — original
+  'Google LLC','Cloudflare, Inc.','Microsoft Corporation',
+  'DNSFilter, Inc.','Amazon.com, Inc.','OneCleveland',
+  'Cisco OpenDNS, LLC','Apple Inc.','Akamai International B.V.',
+  'CenturyLink Communications, LLC','Akamai Technologies, Inc.',
+  'Verizon Business','Fastly, Inc.','Facebook, Inc.',
+  'ZSCALER, INC.','SecurityMetrics, Inc.','Cox Communications Inc.',
+  'Cogeco Connexion inc','Cogeco Connexion Inc.','Datto, LLC',
+  'Akamai Connected Cloud','Quad9','Cisco Webex LLC',
+  'Cloudflare London, LLC','Anthropic, PBC',
+  'Amazon Data Services Ireland Ltd','Google Ireland Limited',
+  'Google Fiber Inc.',
+  // Tier 1 — new ISPs / CDNs / known-good infra
+  'NetActuate, Inc','Zayo Bandwidth','US Internet Corp',
+  'Inyo Networks','AT&T Enterprises, LLC',
+  'Level 3 Parent, LLC','Comcast Cable Communications, LLC',
+  'Rogers Communications Canada Inc.','Crown Castle Fiber LLC',
+  'Transtelco Inc','Yahoo Holdings Inc.','BroadSoft, Inc.',
+  'Charter Communications Inc','Charter Communications LLC',
+  'LUS Fiber','Bell Canada','NTT Global Data Centers Americas, INC.',
+  'Dropbox, Inc.','Pandora Media, LLC','New Relic',
+  'VeriSign Global Registry Services','Cogent Communications, LLC',
+  'Meraki LLC','GSL Networks Pty LTD','British Telecommunications PLC',
+  'Grid4 Communications, Inc','Adobe Inc.','Dialpad, Inc.',
+  'RingCentral Inc','TELUS Communications Inc.',
+  'Canonical Group Limited','Dell, Inc.','T-Mobile USA, Inc.',
+  'Deutsche Telekom AG','NSONE Inc','Mitel Networks, Inc.',
+  'OARnet','Netflix Streaming Services Inc.',
+  'WideOpenWest Finance LLC','Frontier Communications of America, Inc.',
+  'Windstream Communications LLC','Ooma, Inc.','Stratus Networks',
+  'DATACOM CARIBE, INC.','Oracle Corporation'
+];
+return dropList.contains(org);"""
         }
       }
     ]
