@@ -1,0 +1,49 @@
+{
+  "drop-known-good-tier1": {
+    "description": "Drop allowed traffic to known-good CDN, DNS, ISP, and cloud destinations. Blocked/denied events are never dropped.",
+    "processors": [
+      {
+        "drop": {
+          "if": """
+          def action = ctx?.event?.action;
+          if (action == null) return false;
+          if (['blocked','denied','deny','dropped','drop','reject','rejected'].contains(action.toLowerCase())) return false;
+          def org = ctx?.destination?.as?.organization?.name;
+          if (org == null) return false;
+          def dropList = [
+            'Google LLC',
+            'Cloudflare, Inc.',
+            'Microsoft Corporation',
+            'DNSFilter, Inc.',
+            'Amazon.com, Inc.',
+            'OneCleveland',
+            'Cisco OpenDNS, LLC',
+            'Apple Inc.',
+            'Akamai International B.V.',
+            'CenturyLink Communications, LLC',
+            'Akamai Technologies, Inc.',
+            'Verizon Business',
+            'Fastly, Inc.',
+            'Facebook, Inc.',
+            'ZSCALER, INC.',
+            'SecurityMetrics, Inc.',
+            'Cox Communications Inc.',
+            'Cogeco Connexion inc',
+            'Cogeco Connexion Inc.',
+            'Datto, LLC',
+            'Akamai Connected Cloud',
+            'Quad9',
+            'Cisco Webex LLC',
+            'Cloudflare London, LLC',
+            'Anthropic, PBC',
+            'Amazon Data Services Ireland Ltd',
+            'Google Ireland Limited',
+            'Google Fiber Inc.'
+          ];
+          return dropList.contains(org);
+        """
+        }
+      }
+    ]
+  }
+}
