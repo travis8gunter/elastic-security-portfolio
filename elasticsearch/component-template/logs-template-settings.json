@@ -1,0 +1,31 @@
+{
+  "component_templates": [
+    {
+      "name": "logs-[NAME]-settings",
+      "component_template": {
+        "template": {
+          "settings": {
+            "index": {
+              "lifecycle": {
+                "name": "logs-[NAME]-14d-policy"
+              },
+              "codec": "best_compression",
+              "mapping": {
+                "total_fields": {
+                  "limit": "2000"
+                }
+              },
+              "refresh_interval": "30s",
+              "number_of_shards": "4",
+              "number_of_replicas": "1"
+            }
+          }
+        },
+        "_meta": {
+          "managed_by": "Security Engineering",
+          "description": "Index settings for high-volume ingest"
+        }
+      }
+    }
+  ]
+}
